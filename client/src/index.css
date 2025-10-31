@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* near top of index.css */
+html, body, #root { height: 100%; }
+body {
+  overscroll-behavior-y: contain;
+  overflow-x: hidden;   /* prevents horizontal scrollbar when hero is full-bleed */
+  background: linear-gradient(180deg, #FAF8F6 0%, #E9F4FF 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
