@@ -1,0 +1,182 @@
+// src/features/shareyourdarksecret/Share.jsx
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+
+import SecretForm from "./SecretForm";
+import PublicFeedSecrets from "./PublicFeedSecrets";
+
+/* dark aesthetic forest image — same intensity as other pages */
+const BG_URL = "https://images.pexels.com/photos/19190208/pexels-photo-19190208.jpeg";
+
+export default function Share() {
+  const [forcedFilter, setForcedFilter] = useState("recent"); // recent | yesterday | most
+
+  const pageTitle = "Share an Anonymous Secret — BeyondWhole";
+  const pageDescription =
+    "Share a secret anonymously or keep it private. BeyondWhole provides a safe, judgment-free space to unburden yourself and find community support.";
+
+  const canonical = typeof window !== "undefined" ? window.location.href : "/secret";
+
+  return (
+    <div
+      className="min-h-screen antialiased"
+      style={{
+        backgroundColor: "#ffffff",
+        color: "#383B39",
+        fontFamily: 'Manifold, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
+      }}
+    >
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="keywords" content="share secret anonymously, anonymous secrets, unburden yourself, community support, private secrets" />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="BeyondWhole" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={typeof window !== "undefined" ? `${window.location.origin}/og-image-secret.png` : "/og-image-secret.png"} />
+        <meta property="og:url" content={canonical} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+      </Helmet>
+
+      {/* HERO */}
+      <div
+        className="w-full bg-no-repeat bg-center bg-cover relative"
+        style={{ backgroundImage: `url(${BG_URL})` }}
+      >
+        {/* dark overlay so white text reads well */}
+        <div className="absolute inset-0 bg-black/64 pointer-events-none" />
+
+        <div className="relative max-w-6xl mx-auto px-4 pt-28 md:pt-36 lg:pt-44 pb-12">
+          <div className="text-center">
+            <h1
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
+              style={{
+                color: "#ffffff",
+                fontFamily: '"Ethos Nova", "Manifold", system-ui, sans-serif',
+                fontWeight: 800,
+                textShadow: "0 4px 20px rgba(0,0,0,0.6)",
+              }}
+            >
+              Share your dark secret —{" "}
+              <span style={{ color: "#ffffff", fontFamily: '"Ethos Nova", "Manifold"', fontWeight: 900 }}>
+                unburden yourself quietly
+              </span>
+            </h1>
+
+            <p
+              className="mt-3 mx-auto max-w-2xl text-sm sm:text-base md:text-lg"
+              style={{
+                color: "#ffffff",
+                fontFamily: "Manifold, system-ui, sans-serif",
+                lineHeight: 1.6,
+                opacity: 0.95,
+                textShadow: "0 3px 12px rgba(0,0,0,0.45)",
+              }}
+            >
+              Speak without judgement. Keep private or share anonymously with our community for solidarity and support.
+            </p>
+          </div>
+
+          <div
+            className="mt-8 mx-auto max-w-2xl px-4"
+            style={{
+              backgroundColor: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.06)",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <div className="p-6 md:p-8">
+              <SecretForm />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Community feed */}
+      <div className="max-w-6xl mx-auto px-4 py-10 md:py-12">
+        <section
+          className="rounded-2xl p-4 md:p-6 lg:p-8"
+          style={{
+            backgroundColor: "#ffffff",
+            border: "1px solid rgba(56,59,57,0.08)",
+            boxShadow: "0 6px 18px rgba(56,59,57,0.04)",
+          }}
+        >
+          <div className="max-w-4xl mx-auto">
+            <h2
+              className="text-xl sm:text-2xl md:text-3xl text-center"
+              style={{
+                color: "#383B39",
+                fontFamily: '"Ethos Nova", Manifold, system-ui',
+                marginBottom: 6,
+                fontWeight: 700,
+              }}
+            >
+              Shared Secrets
+            </h2>
+
+            <p
+              className="text-center mt-2 text-sm sm:text-base"
+              style={{
+                color: "#383B39",
+                fontFamily: "Manifold, system-ui, sans-serif",
+                opacity: 0.95,
+                maxWidth: 720,
+                margin: "0 auto",
+                lineHeight: 1.5,
+              }}
+            >
+              Anonymous entries from people who chose to share — read for empathy, not judgement.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-3 mt-6">
+              <button
+                onClick={() => setForcedFilter("recent")}
+                className="px-4 py-2 rounded-lg text-sm font-medium"
+                style={{
+                  backgroundColor: forcedFilter === "recent" ? "#383B39" : "#ffffff",
+                  color: forcedFilter === "recent" ? "#ffffff" : "#383B39",
+                  border: "1px solid rgba(56,59,57,0.12)",
+                }}
+              >
+                Recent
+              </button>
+
+              <button
+                onClick={() => setForcedFilter("yesterday")}
+                className="px-4 py-2 rounded-lg text-sm font-medium"
+                style={{
+                  backgroundColor: forcedFilter === "yesterday" ? "#383B39" : "#ffffff",
+                  color: forcedFilter === "yesterday" ? "#ffffff" : "#383B39",
+                  border: "1px solid rgba(56,59,57,0.12)",
+                }}
+              >
+                Yesterday
+              </button>
+
+              <button
+                onClick={() => setForcedFilter("most")}
+                className="px-4 py-2 rounded-lg text-sm font-medium"
+                style={{
+                  backgroundColor: forcedFilter === "most" ? "#383B39" : "#ffffff",
+                  color: forcedFilter === "most" ? "#ffffff" : "#383B39",
+                  border: "1px solid rgba(56,59,57,0.12)",
+                }}
+              >
+                Most Hearts
+              </button>
+            </div>
+
+            <div className="mt-8">
+              <PublicFeedSecrets forcedFilter={forcedFilter} />
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
