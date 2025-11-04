@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react"; // For hamburger icons
 
@@ -8,8 +8,32 @@ export default function Navbar() {
   const textColor = "#383B39";
   const [isOpen, setIsOpen] = useState(false);
 
+  // dropdown control: null | "confession" | "quizzes" | "tools"
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const leaveTimer = useRef(null);
+
+  const open = (name) => {
+    if (leaveTimer.current) {
+      clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+    }
+    setOpenDropdown(name);
+  };
+
+  const closeSoon = (delay = 150) => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    leaveTimer.current = setTimeout(() => {
+      setOpenDropdown(null);
+      leaveTimer.current = null;
+    }, delay);
+  };
+
+  const toggleMobile = () => setIsOpen((s) => !s);
+
   return (
     <nav
+      role="navigation"
+      aria-label="Main navigation"
       className="w-full py-1.5 sm:py-2.5 shadow-sm fixed top-0 left-0 z-50"
       style={{
         backgroundColor: BG,
@@ -21,7 +45,7 @@ export default function Navbar() {
         {/* Brand with Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img
-            src="/fevicon.png" // 🔗 Replace this with your logo image link (e.g., "/assets/logo.png" or online link)
+            src="/fevicon.png"
             alt="BeyondWhole Logo"
             className="w-7 h-7 sm:w-8 sm:h-8 object-contain"
           />
@@ -36,7 +60,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav Links */}
+        {/* Desktop Nav Links (grouped) */}
         <div className="hidden sm:flex items-center gap-2 sm:gap-4">
           <NavLink
             to="/"
@@ -51,50 +75,147 @@ export default function Navbar() {
             <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
           </NavLink>
 
-          <NavLink
-            to="/message"
-            className={({ isActive }) =>
-              `text-sm sm:text-base px-2 py-1 sm:px-3 sm:py-2 relative transition-all duration-200 ${
-                isActive ? "font-semibold" : ""
-              }`
-            }
-            style={{ color: textColor }}
+          {/* Confession dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => open("confession")}
+            onMouseLeave={() => closeSoon()}
           >
-            Write Message to God
-            <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
-          </NavLink>
+            <button
+              aria-haspopup="true"
+              aria-expanded={openDropdown === "confession"}
+              aria-controls="menu-confession"
+              className="text-sm sm:text-base px-3 py-2"
+              style={{ color: textColor }}
+              onFocus={() => open("confession")}
+              onBlur={() => closeSoon()}
+            >
+              Confession
+            </button>
 
-          <NavLink
-            to="/confess"
-            className={({ isActive }) =>
-              `text-sm sm:text-base px-2 py-1 sm:px-3 sm:py-2 relative transition-all duration-200 ${
-                isActive ? "font-semibold" : ""
-              }`
-            }
-            style={{ color: textColor }}
-          >
-            Write Confession
-            <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
-          </NavLink>
+            <div
+              id="menu-confession"
+              role="menu"
+              className={`absolute right-0 mt-2 w-56 bg-white border shadow-md rounded-md transform transition-all duration-150 z-50
+                ${openDropdown === "confession" ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"}`}
+              style={{ transformOrigin: "top" }}
+            >
+              <div className="py-2">
+                <NavLink
+                  to="/message"
+                  className="block px-4 py-2 text-sm hover:bg-gray-50"
+                  style={{ color: textColor }}
+                >
+                  Write Message to God
+                </NavLink>
 
-          <NavLink
-            to="/secret"
-            className={({ isActive }) =>
-              `text-sm sm:text-base px-2 py-1 sm:px-3 sm:py-2 relative transition-all duration-200 ${
-                isActive ? "font-semibold" : ""
-              }`
-            }
-            style={{ color: textColor }}
+                <NavLink
+                  to="/confess"
+                  className="block px-4 py-2 text-sm hover:bg-gray-50"
+                  style={{ color: textColor }}
+                >
+                  Write Confession
+                </NavLink>
+
+                <NavLink
+                  to="/secret"
+                  className="block px-4 py-2 text-sm hover:bg-gray-50"
+                  style={{ color: textColor }}
+                >
+                  Share Secret
+                </NavLink>
+              </div>
+            </div>
+          </div>
+
+          {/* Quizzes dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => open("quizzes")}
+            onMouseLeave={() => closeSoon()}
           >
-            Share Secret
-            <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
-          </NavLink>
+            <button
+              aria-haspopup="true"
+              aria-expanded={openDropdown === "quizzes"}
+              aria-controls="menu-quizzes"
+              className="text-sm sm:text-base px-3 py-2"
+              style={{ color: textColor }}
+              onFocus={() => open("quizzes")}
+              onBlur={() => closeSoon()}
+            >
+              Quizzes
+            </button>
+
+            <div
+              id="menu-quizzes"
+              role="menu"
+              className={`absolute right-0 mt-2 w-56 bg-white border shadow-md rounded-md transform transition-all duration-150 z-50
+                ${openDropdown === "quizzes" ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"}`}
+              style={{ transformOrigin: "top" }}
+            >
+              <div className="py-2">
+                <NavLink
+                  to="/quizzes/hellorheaven"
+                  className="block px-4 py-2 text-sm hover:bg-gray-50"
+                  style={{ color: textColor }}
+                >
+                  Hell or Heaven
+                </NavLink>
+
+                <NavLink
+                  to="/quizzes/findanimalspirit"
+                  className="block px-4 py-2 text-sm hover:bg-gray-50"
+                  style={{ color: textColor }}
+                >
+                  Find Your Animal Spirit
+                </NavLink>
+              </div>
+            </div>
+          </div>
+
+          {/* Tools dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => open("tools")}
+            onMouseLeave={() => closeSoon()}
+          >
+            <button
+              aria-haspopup="true"
+              aria-expanded={openDropdown === "tools"}
+              aria-controls="menu-tools"
+              className="text-sm sm:text-base px-3 py-2"
+              style={{ color: textColor }}
+              onFocus={() => open("tools")}
+              onBlur={() => closeSoon()}
+            >
+              Tools
+            </button>
+
+            <div
+              id="menu-tools"
+              role="menu"
+              className={`absolute right-0 mt-2 w-56 bg-white border shadow-md rounded-md transform transition-all duration-150 z-50
+                ${openDropdown === "tools" ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"}`}
+              style={{ transformOrigin: "top" }}
+            >
+              <div className="py-2">
+                <NavLink
+                  to="/tools/deathcalulator"
+                  className="block px-4 py-2 text-sm hover:bg-gray-50"
+                  style={{ color: textColor }}
+                >
+                  Death Calculator
+                </NavLink>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
         <button
           className="sm:hidden text-[#383B39] focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleMobile}
+          aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -122,51 +243,69 @@ export default function Navbar() {
           style={{ fontFamily: "Aquilone, serif" }}
         >
           <img
-            src="/logo.png" // 🔗 Replace this too (same link as above)
+            src="/fevicon.png"
             alt="BeyondWhole Logo"
             className="w-7 h-7 object-contain"
           />
           BeyondWhole
         </Link>
 
-        <NavLink
-          to="/message"
-          onClick={() => setIsOpen(false)}
-          className={({ isActive }) =>
-            `text-base relative transition-all duration-200 ${
-              isActive ? "font-semibold" : ""
-            }`
-          }
-        >
-          Write Message to God
-          <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
-        </NavLink>
+        {/* Confession block */}
+        <div className="w-full">
+          <div className="text-sm font-semibold mb-2">Confession</div>
+          <NavLink
+            to="/message"
+            onClick={() => setIsOpen(false)}
+            className="block text-base py-1"
+          >
+            Write Message to God
+          </NavLink>
+          <NavLink
+            to="/confess"
+            onClick={() => setIsOpen(false)}
+            className="block text-base py-1"
+          >
+            Write Confession
+          </NavLink>
+          <NavLink
+            to="/secret"
+            onClick={() => setIsOpen(false)}
+            className="block text-base py-1"
+          >
+            Share Secret
+          </NavLink>
+        </div>
 
-        <NavLink
-          to="/confess"
-          onClick={() => setIsOpen(false)}
-          className={({ isActive }) =>
-            `text-base relative transition-all duration-200 ${
-              isActive ? "font-semibold" : ""
-            }`
-          }
-        >
-          Write Confession
-          <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
-        </NavLink>
+        {/* Quizzes block */}
+        <div className="w-full">
+          <div className="text-sm font-semibold mb-2">Quizzes</div>
+          <NavLink
+            to="/quizzes/hellorheaven"
+            onClick={() => setIsOpen(false)}
+            className="block text-base py-1"
+          >
+            Hell or Heaven
+          </NavLink>
+          <NavLink
+            to="/quizzes/findanimalspirit"
+            onClick={() => setIsOpen(false)}
+            className="block text-base py-1"
+          >
+            Find Your Animal Spirit
+          </NavLink>
+        </div>
 
-        <NavLink
-          to="/secret"
-          onClick={() => setIsOpen(false)}
-          className={({ isActive }) =>
-            `text-base relative transition-all duration-200 ${
-              isActive ? "font-semibold" : ""
-            }`
-          }
-        >
-          Share Secret
-          <span className="block h-[1px] bg-[#383B39] scale-x-0 hover:scale-x-100 transition-transform origin-left"></span>
-        </NavLink>
+        {/* Tools block */}
+        <div className="w-full">
+          <div className="text-sm font-semibold mb-2">Tools</div>
+          <NavLink
+            to="/tools/deathcalulator"
+            onClick={() => setIsOpen(false)}
+            className="block text-base py-1"
+          >
+            Death Calculator
+          </NavLink>
+        </div>
       </div>
     </nav>
   );

@@ -10,7 +10,7 @@ export default function Footer(){
           <Link to="/privacy" className="underline">Privacy Policy</Link> &nbsp;|&nbsp;
           <Link to="/contact" className="underline">Contact</Link>
         </div>
-        <div>© {new Date().getFullYear()} MessageToGod — a calm space to share your heart.</div>
+        <div>© {new Date().getFullYear()} BeyondWhole</div>
       </div>
     </footer>
   );

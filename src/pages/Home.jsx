@@ -20,13 +20,14 @@ export default function Home() {
     featuresRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // ✅ Updated feature descriptions (more emotional + keyword-rich)
+  // ✅ FEATURES now includes confession, quizzes and tools (each with its own bg color)
   const FEATURES = [
     {
       key: "anonymous-message",
       title: "Send a Message to God",
       desc: "Write and send your message privately to God — a spiritual space for peace and clarity.",
       to: "/message",
+      bgColor: PALETTE.lightCard, // keep current (white) for confession area
       icon: (
         <svg
           viewBox="0 0 24 24"
@@ -48,6 +49,7 @@ export default function Home() {
       title: "Confess Anonymously",
       desc: "Unburden your heart with full privacy. Confess freely and feel emotional release.",
       to: "/confess",
+      bgColor: PALETTE.lightCard,
       icon: (
         <svg
           viewBox="0 0 24 24"
@@ -69,6 +71,7 @@ export default function Home() {
       title: "Share a Dark Secret",
       desc: "Release your thoughts anonymously and read what others have shared in kindness.",
       to: "/secret",
+      bgColor: PALETTE.lightCard,
       icon: (
         <svg
           viewBox="0 0 24 24"
@@ -84,12 +87,91 @@ export default function Home() {
         </svg>
       ),
     },
+
+    // quizzes
+    {
+      key: "quiz-hellorheaven",
+      title: "Quiz: Hell or Heaven",
+      desc: "Play the quick ‘Hell or Heaven’ quiz — a short fun test that reveals a playful spiritual result.",
+      to: "/quizzes/hellorheaven",
+      bgColor: "#DCE8FF", // slightly darker blue tint for quizzes
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          className="w-14 h-14"
+          fill="none"
+          stroke={PALETTE.midDark}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M12 2v6" />
+          <path d="M6 8l6 6 6-6" />
+        </svg>
+      ),
+    },
+    {
+      key: "quiz-animalspirit",
+      title: "Quiz: Find Your Animal Spirit",
+      desc: "Discover the animal spirit that matches your personality — curious, playful and shareable.",
+      to: "/quizzes/findanimalspirit",
+      bgColor: "#FFDFEA", // slightly darker pink tint for second quiz
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          className="w-14 h-14"
+          fill="none"
+          stroke={PALETTE.midDark}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M4 12a8 8 0 1016 0 8 8 0 00-16 0z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      ),
+    },
+
+    // tool
+    {
+      key: "tool-deathcalc",
+      title: "Tool: Death Calculator",
+      desc: "A playful life-estimate tool — enter your birth date for a light-hearted estimate (entertainment only).",
+      to: "/tools/deathcalulator",
+      bgColor: "#FFF4CC", // slightly darker yellow tint for tools
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          className="w-14 h-14"
+          fill="none"
+          stroke={PALETTE.midDark}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M12 2v6" />
+          <path d="M5 12h14" />
+          <path d="M12 22v-6" />
+        </svg>
+      ),
+    },
   ];
 
-  // ✅ Updated meta content (SEO)
-  const siteTitle = "Anonymous Confessions & Manifestation Planner | BeyondWhole";
+  // group features
+  const confessions = FEATURES.filter((f) =>
+    ["anonymous-message", "anonymous-confess", "share-secret"].includes(f.key)
+  );
+  const quizzes = FEATURES.filter((f) => f.key.startsWith("quiz-"));
+  const tools = FEATURES.filter((f) => f.key.startsWith("tool-"));
+
+  // ✅ SEO: Updated title + description containing common keywords (confession, anonymous, quizzes, tools)
+  const siteTitle =
+    "BeyondWhole | Anonymous Confessions, Spiritual Quizzes & Manifestation Tools";
   const siteDescription =
-    "BeyondWhole helps you pray, confess, and reflect — all anonymously. A calm, judgment-free space for relaxation, manifestation, and emotional relief.";
+    "BeyondWhole — a calm, anonymous space to pray, confess, and reflect. Explore spiritual quizzes, manifestation tools, and private confession features for healing, fun, and self-discovery.";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -117,8 +199,10 @@ export default function Home() {
         <meta name="description" content={siteDescription} />
         <meta
           name="keywords"
-          content="anonymous confession, manifestation planner, anonymous prayer, share secret, emotional peace, reflection"
+          content="anonymous confession, anonymous prayer, spiritual quizzes, find your animal spirit, manifestation tools, share secret anonymously, healing journal"
         />
+        <meta name="author" content="BeyondWhole" />
+        <meta name="theme-color" content={SITE_BG} />
         <link
           rel="canonical"
           href={
@@ -159,13 +243,13 @@ export default function Home() {
           }}
         >
           <div className="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
-            <div className="max-w-3xl mx-auto text-left">
+            <div className="max-w-3xl mx-auto text-center">
               <h1
                 id="home-hero-title"
-                className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight"
                 style={{ color: PALETTE.lightCard, fontFamily: "Monopoly, serif" }}
               >
-                Find Calm in Anonymous Reflection & Manifestation
+                Find Peace, Purpose & Fun — All in One Space
               </h1>
 
               <p
@@ -173,27 +257,43 @@ export default function Home() {
                 style={{
                   color: PALETTE.lightAlt,
                   fontFamily: "'Fjalla One', sans-serif",
+                  lineHeight: 1.55,
                 }}
               >
-                BeyondWhole offers you a peaceful space to pray, confess, and
-                manifest — all anonymously. No judgment, no pressure, just
-                healing and mindfulness.
+                BeyondWhole is your calm online corner for self-reflection and
+                gentle entertainment. Confess or pray in private, explore
+                spiritual quizzes that reveal your personality, and use
+                manifestation tools to align your thoughts and goals.
               </p>
 
-              {/* ✅ Non-curved CTA */}
-              <div className="mt-8 flex items-start gap-3">
+              {/* ✅ Primary CTA */}
+              <div className="mt-8 flex items-center justify-center gap-3">
                 <button
                   onClick={scrollToFeatures}
-                  className="px-8 py-3 font-medium shadow-sm"
+                  className="px-8 py-3 text-lg font-medium shadow-sm"
                   style={{
                     backgroundColor: PALETTE.mid,
                     color: PALETTE.lightCard,
                     borderRadius: 0,
                   }}
-                  aria-label="Scroll to explore features"
+                  aria-label="Explore Confessions and Quizzes"
                 >
-                  Share a confession, send a prayer, or start manifesting
+                  Start Now
                 </button>
+
+                {/* secondary CTA - direct to message
+                <Link
+                  to="/Confess"
+                  className="px-6 py-3 text-lg font-medium border"
+                  style={{
+                    color: PALETTE.lightCard,
+                    borderColor: "rgba(255,255,255,0.12)",
+                    borderRadius: 0,
+                  }}
+                >
+                  Send a Private Message
+                </Link> */}
+                
               </div>
             </div>
           </div>
@@ -225,56 +325,172 @@ export default function Home() {
                 fontWeight: 800,
               }}
             >
-              Tools for Emotional Healing & Self Reflection
+              Tools for Emotional Healing, Self Reflection & Soulful Play
             </h3>
 
             <p
               className="mt-2 max-w-2xl mx-auto"
               style={{ color: PALETTE.lightAlt, fontWeight: 400 }}
             >
-              BeyondWhole gives you three simple paths — write to God, confess
-              privately, or share a secret. Each tool supports inner clarity,
-              calmness, and positive manifestation.
+              BeyondWhole offers private confession and prayer features plus
+              playful quizzes and reflective tools — everything to help you
+              express, explore, and grow.
             </p>
 
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {FEATURES.map((f) => (
-                <Link key={f.key} to={f.to} className="no-underline" title={f.title}>
-                  <article
-                    className="p-6 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow"
-                    style={{
-                      backgroundColor: PALETTE.lightCard,
-                      border: `1px solid ${PALETTE.mid}`,
-                      borderRadius: 0,
-                      minHeight: 200,
-                    }}
-                    aria-labelledby={`feature-${f.key}`}
-                  >
-                    <div className="mb-4" aria-hidden>
-                      {f.icon}
-                    </div>
+            {/* ===== Confessions group ===== */}
+            <div className="mt-10 text-left">
+              <h4
+                className="text-xl font-semibold mb-4"
+                style={{ color: PALETTE.lightCard }}
+              >
+                Confessions
+              </h4>
 
-                    <div>
-                      <h3
-                        id={`feature-${f.key}`}
-                        className="text-lg font-semibold"
-                        style={{
-                          color: SITE_BG,
-                          fontFamily: "Manifold, system-ui, sans-serif",
-                        }}
-                      >
-                        {f.title}
-                      </h3>
-                      <p
-                        className="mt-2 text-sm"
-                        style={{ color: PALETTE.midDark }}
-                      >
-                        {f.desc}
-                      </p>
-                    </div>
-                  </article>
-                </Link>
-              ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {confessions.map((f) => (
+                  <Link key={f.key} to={f.to} className="no-underline" title={f.title}>
+                    <article
+                      className="p-6 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow hover:scale-[1.02] transition-transform duration-300"
+                      style={{
+                        backgroundColor: f.bgColor || PALETTE.lightCard,
+                        // subtle dark overlay to make it a "lil darker"
+                        boxShadow: "inset 0 0 0 1000px rgba(0,0,0,0.03)",
+                        border: `1px solid ${PALETTE.mid}`,
+                        borderRadius: 6,
+                        minHeight: 180,
+                      }}
+                      aria-labelledby={`feature-${f.key}`}
+                    >
+                      <div className="mb-4" aria-hidden>
+                        {f.icon}
+                      </div>
+
+                      <div>
+                        <h3
+                          id={`feature-${f.key}`}
+                          className="text-lg font-semibold"
+                          style={{
+                            color: PALETTE.darkBg,
+                            fontFamily: "Manifold, system-ui, sans-serif",
+                          }}
+                        >
+                          {f.title}
+                        </h3>
+                        <p
+                          className="mt-2 text-sm"
+                          style={{ color: PALETTE.midDark }}
+                        >
+                          {f.desc}
+                        </p>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* ===== Quizzes group ===== */}
+            <div className="mt-10 text-left">
+              <h4
+                className="text-xl font-semibold mb-4"
+                style={{ color: PALETTE.lightCard }}
+              >
+                Quizzes
+              </h4>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {quizzes.map((f) => (
+                  <Link key={f.key} to={f.to} className="no-underline" title={f.title}>
+                    <article
+                      className="p-6 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow hover:scale-[1.02] transition-transform duration-300"
+                      style={{
+                        backgroundColor: f.bgColor || PALETTE.lightCard,
+                        // slightly stronger dark overlay for quizzes
+                        boxShadow: "inset 0 0 0 1000px rgba(0,0,0,0.06)",
+                        border: `1px solid ${PALETTE.mid}`,
+                        borderRadius: 6,
+                        minHeight: 180,
+                      }}
+                      aria-labelledby={`feature-${f.key}`}
+                    >
+                      <div className="mb-4" aria-hidden>
+                        {f.icon}
+                      </div>
+
+                      <div>
+                        <h3
+                          id={`feature-${f.key}`}
+                          className="text-lg font-semibold"
+                          style={{
+                            color: PALETTE.darkBg,
+                            fontFamily: "Manifold, system-ui, sans-serif",
+                          }}
+                        >
+                          {f.title}
+                        </h3>
+                        <p
+                          className="mt-2 text-sm"
+                          style={{ color: PALETTE.midDark }}
+                        >
+                          {f.desc}
+                        </p>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* ===== Tools group ===== */}
+            <div className="mt-10 text-left">
+              <h4
+                className="text-xl font-semibold mb-4"
+                style={{ color: PALETTE.lightCard }}
+              >
+                Tools
+              </h4>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {tools.map((f) => (
+                  <Link key={f.key} to={f.to} className="no-underline" title={f.title}>
+                    <article
+                      className="p-6 shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow hover:scale-[1.02] transition-transform duration-300"
+                      style={{
+                        backgroundColor: f.bgColor || PALETTE.lightCard,
+                        // medium dark overlay for tools
+                        boxShadow: "inset 0 0 0 1000px rgba(0,0,0,0.05)",
+                        border: `1px solid ${PALETTE.mid}`,
+                        borderRadius: 6,
+                        minHeight: 180,
+                      }}
+                      aria-labelledby={`feature-${f.key}`}
+                    >
+                      <div className="mb-4" aria-hidden>
+                        {f.icon}
+                      </div>
+
+                      <div>
+                        <h3
+                          id={`feature-${f.key}`}
+                          className="text-lg font-semibold"
+                          style={{
+                            color: PALETTE.darkBg,
+                            fontFamily: "Manifold, system-ui, sans-serif",
+                          }}
+                        >
+                          {f.title}
+                        </h3>
+                        <p
+                          className="mt-2 text-sm"
+                          style={{ color: PALETTE.midDark }}
+                        >
+                          {f.desc}
+                        </p>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
             </div>
 
             <div className="mt-10">

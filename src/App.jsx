@@ -1,6 +1,6 @@
 // src/App.jsx
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -19,7 +19,30 @@ import Confess from "./features/confessionoffeeling/Confess";
 // Share your dark secret feature
 import Share from "./features/shareyourdarksecret/Share";
 
+// NEW: Quizzes & Tools (imports must exactly match filename casing)
+import HellOrHeaven from "./features/quizes/HellOrHeaven";
+import FindAnimalSpirit from "./features/quizes/FindAnimalSpirit";
+import DeathCalculator from "./features/tools/DeathCalculator";
+
+// Analytics helper (send SPA pageviews). Create this file if you haven't:
+// src/track/ga.js -> export const pageview = (path) => { if (window.gtag) window.gtag('event','page_view',{ page_path: path }); };
+import { pageview } from "./track/ga";
+
 export default function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Send a page_view to GA on every route change (SPA)
+    try {
+      pageview(location.pathname + location.search);
+    } catch (e) {
+      // fail silently if analytics not configured
+      // console.debug("GA pageview error:", e);
+    }
+    // optional: scroll to top on navigation
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* top nav */}
@@ -40,6 +63,13 @@ export default function App() {
 
           {/* Share your dark secret */}
           <Route path="/secret" element={<Share />} />
+
+          {/* Quizzes */}
+          <Route path="/quizzes/hellorheaven" element={<HellOrHeaven />} />
+          <Route path="/quizzes/findanimalspirit" element={<FindAnimalSpirit />} />
+
+          {/* Tools */}
+          <Route path="/tools/deathcalulator" element={<DeathCalculator />} />
 
           {/* Other pages (centered) */}
           <Route

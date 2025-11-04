@@ -11,11 +11,20 @@ const BG_URL = "https://images.pexels.com/photos/19190208/pexels-photo-19190208.
 export default function Share() {
   const [forcedFilter, setForcedFilter] = useState("recent"); // recent | yesterday | most
 
-  const pageTitle = "Share an Anonymous Secret — BeyondWhole";
+  // ✅ SEO-friendly title + description
+  const pageTitle = "Share Your Secret & Unburden Yourself | BeyondWhole";
   const pageDescription =
-    "Share a secret anonymously or keep it private. BeyondWhole provides a safe, judgment-free space to unburden yourself and find community support.";
+    "Carrying a heavy secret? Share it anonymously and unburden your heart. Find empathy, solidarity, and private support in a safe, judgment-free space on BeyondWhole.";
 
   const canonical = typeof window !== "undefined" ? window.location.href : "/secret";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Share Your Secret & Unburden Yourself",
+    description: pageDescription,
+    url: canonical,
+  };
 
   return (
     <div
@@ -29,17 +38,30 @@ export default function Share() {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <meta name="keywords" content="share secret anonymously, anonymous secrets, unburden yourself, community support, private secrets" />
+        <meta name="keywords" content="share secret anonymously, unburden yourself, anonymous secrets, private confession, community support" />
+        <meta name="robots" content="index,follow" />
         <link rel="canonical" href={canonical} />
+
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="BeyondWhole" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={typeof window !== "undefined" ? `${window.location.origin}/og-image-secret.png` : "/og-image-secret.png"} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Mobile */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {/* Preconnect for images */}
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+
+        {/* Structured data */}
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       {/* HERO */}
@@ -53,7 +75,7 @@ export default function Share() {
         <div className="relative max-w-6xl mx-auto px-4 pt-28 md:pt-36 lg:pt-44 pb-12">
           <div className="text-center">
             <h1
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight"
               style={{
                 color: "#ffffff",
                 fontFamily: '"Ethos Nova", "Manifold", system-ui, sans-serif',
@@ -61,23 +83,20 @@ export default function Share() {
                 textShadow: "0 4px 20px rgba(0,0,0,0.6)",
               }}
             >
-              Share your dark secret —{" "}
-              <span style={{ color: "#ffffff", fontFamily: '"Ethos Nova", "Manifold"', fontWeight: 900 }}>
-                unburden yourself quietly
-              </span>
+              Share Your Secret &amp; Unburden Yourself
             </h1>
 
             <p
-              className="mt-3 mx-auto max-w-2xl text-sm sm:text-base md:text-lg"
+              className="mt-3 mx-auto max-w-2xl text-base sm:text-lg md:text-xl"
               style={{
                 color: "#ffffff",
                 fontFamily: "Manifold, system-ui, sans-serif",
                 lineHeight: 1.6,
-                opacity: 0.95,
+                opacity: 0.98,
                 textShadow: "0 3px 12px rgba(0,0,0,0.45)",
               }}
             >
-              Speak without judgement. Keep private or share anonymously with our community for solidarity and support.
+              Carrying something heavy? Share your secret anonymously to unburden your heart, receive quiet support, and discover solidarity in a compassionate, private space.
             </p>
           </div>
 

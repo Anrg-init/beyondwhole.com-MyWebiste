@@ -11,11 +11,20 @@ const BG_URL = "https://images.pexels.com/photos/29575375/pexels-photo-29575375.
 export default function Confess() {
   const [forcedFilter, setForcedFilter] = useState("recent"); // recent | yesterday | most
 
-  const pageTitle = "Anonymous Confessions — Confess & Share — BeyondWhole";
+  // ✅ SEO-friendly title + description
+  const pageTitle = "Write Your Confession & Share Your Feelings | BeyondWhole";
   const pageDescription =
-    "Confess anonymously, lighten your heart, or share with a supportive community on BeyondWhole. No account required — private and judgment-free.";
+    "Feeling weighed down by secrets? Write your confession anonymously and see people's confessions, share your feelings with a compassionate community, and find relief — private, judgment-free, no account required.";
 
   const canonical = typeof window !== "undefined" ? window.location.href : "/confess";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Write Your Confession & Share Your Feelings",
+    description: pageDescription,
+    url: canonical,
+  };
 
   return (
     <div
@@ -29,17 +38,30 @@ export default function Confess() {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <meta name="keywords" content="anonymous confession, confess anonymously, private confession, community confessions, share feelings" />
+        <meta name="keywords" content="anonymous confession, share feelings, confess anonymously, private confession, community support, emotional relief" />
+        <meta name="robots" content="index,follow" />
         <link rel="canonical" href={canonical} />
+
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="BeyondWhole" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={typeof window !== "undefined" ? `${window.location.origin}/og-image-confess.png` : "/og-image-confess.png"} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Mobile */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {/* Preconnect for images */}
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+
+        {/* Structured data */}
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       {/* HERO */}
@@ -52,7 +74,7 @@ export default function Confess() {
         <div className="relative max-w-6xl mx-auto px-4 pt-28 md:pt-36 lg:pt-44 pb-12">
           <div className="text-center">
             <h1
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight"
               style={{
                 color: "#ffffff",
                 fontFamily: '"Ethos Nova", "Manifold", system-ui, sans-serif',
@@ -60,23 +82,20 @@ export default function Confess() {
                 textShadow: "0 4px 20px rgba(0,0,0,0.6)",
               }}
             >
-              Confess your feeling —{" "}
-              <span style={{ color: "#ffffff", fontFamily: '"Ethos Nova", "Manifold"', fontWeight: 900 }}>
-                let your heart be lighter
-              </span>
+              Write Your Confession &amp; Share Your Feelings
             </h1>
 
             <p
-              className="mt-3 mx-auto max-w-2xl text-sm sm:text-base md:text-lg"
+              className="mt-3 mx-auto max-w-2xl text-base sm:text-lg md:text-xl"
               style={{
                 color: "#ffffff",
                 fontFamily: "Manifold, system-ui, sans-serif",
                 lineHeight: 1.6,
-                opacity: 0.95,
+                opacity: 0.98,
                 textShadow: "0 3px 12px rgba(0,0,0,0.45)",
               }}
             >
-              No account required. Speak freely — anonymously if you prefer. Confessions can be kept private or shared with the community.
+              Feeling weighed down by secrets? Write your confession anonymously and see people confession, express your feelings, and connect with a compassionate community for emotional relief — private, judgment-free, and no account required.
             </p>
           </div>
 
@@ -115,7 +134,7 @@ export default function Confess() {
                 fontWeight: 700,
               }}
             >
-              Community Confessions
+              See People's Confessions
             </h2>
 
             <p

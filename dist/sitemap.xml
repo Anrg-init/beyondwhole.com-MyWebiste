@@ -1,0 +1,107 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://beyondwhole.com/</loc>
+    <lastmod>2025-11-02</lastmod>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/message</loc>
+    <lastmod>2025-11-02</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/confess</loc>
+    <lastmod>2025-11-02</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/secret</loc>
+    <lastmod>2025-11-02</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/about</loc>
+    <lastmod>2025-11-02</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/contact</loc>
+    <lastmod>2025-11-02</lastmod>
+    <priority>0.60</priority>
+  </url>
+</urlset> -->
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
+  <url>
+    <loc>https://beyondwhole.com/</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Core Features -->
+  <url>
+    <loc>https://beyondwhole.com/message</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/confess</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/secret</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Quizzes -->
+  <url>
+    <loc>https://beyondwhole.com/quizzes/hellorheaven</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/quizzes/findanimalspirit</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Tools -->
+  <url>
+    <loc>https://beyondwhole.com/tools/deathcalulator</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Info Pages -->
+  <url>
+    <loc>https://beyondwhole.com/about</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/privacy</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.65</priority>
+  </url>
+
+  <url>
+    <loc>https://beyondwhole.com/contact</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.60</priority>
+  </url>
+</urlset>

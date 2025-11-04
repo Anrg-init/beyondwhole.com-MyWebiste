@@ -11,11 +11,20 @@ const BG_URL = "https://images.pexels.com/photos/16551575/pexels-photo-16551575.
 export default function Message() {
   const [forcedFilter, setForcedFilter] = useState("recent"); // recent | yesterday | most
 
-  const pageTitle = "Send Anonymous Prayer | Confess & Share — BeyondWhole";
+  // ✅ SEO-friendly title + description
+  const pageTitle = "Send Your Message to God | BeyondWhole";
   const pageDescription =
-    "Share private prayers, anonymous confessions, and community messages on BeyondWhole. No login needed — a calm, judgment-free space to reflect and manifest.";
+    "Wondering how to feel connected with God and how to talk to god? Write your personal message to God, share prayers and thoughts anonymously, and find quiet comfort in a private, judgment-free space.";
 
   const canonical = typeof window !== "undefined" ? window.location.href : "/message";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Send Your Message to God",
+    description: pageDescription,
+    url: canonical,
+  };
 
   return (
     <div
@@ -23,23 +32,37 @@ export default function Message() {
       style={{
         backgroundColor: "#ffffff",
         color: "#383B39",
-        fontFamily: 'Manifold, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
+        fontFamily:
+          'Manifold, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
       }}
     >
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <meta name="keywords" content="anonymous prayer, anonymous confession, message to God, private journal, community messages, manifestation planner" />
+        <meta name="keywords" content="anonymous prayer, message to god, anonymous confession, private prayer, manifestation planner" />
+        <meta name="robots" content="index,follow" />
         <link rel="canonical" href={canonical} />
+
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="BeyondWhole" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={typeof window !== "undefined" ? `${window.location.origin}/og-image-message.png` : "/og-image-message.png"} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Mobile */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {/* Preconnect for images */}
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+
+        {/* Structured data */}
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       {/* HERO */}
@@ -54,7 +77,7 @@ export default function Message() {
         <div className="relative max-w-6xl mx-auto px-4 pt-28 md:pt-36 lg:pt-44 pb-12">
           <div className="text-center">
             <h1
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight"
               style={{
                 color: "#ffffff",
                 fontFamily: '"Ethos Nova", "Manifold", system-ui, sans-serif',
@@ -62,23 +85,20 @@ export default function Message() {
                 textShadow: "0 4px 20px rgba(0,0,0,0.6)",
               }}
             >
-              Express your heart —{" "}
-              <span style={{ color: "#ffffff", fontFamily: '"Ethos Nova", "Manifold"', fontWeight: 900 }}>
-                let the Divine read your words
-              </span>
+              Send Your Message to God
             </h1>
 
             <p
-              className="mt-3 mx-auto max-w-2xl text-sm sm:text-base md:text-lg"
+              className="mt-3 mx-auto max-w-2xl text-base sm:text-lg md:text-xl"
               style={{
                 color: "#ffffff",
                 fontFamily: "Manifold, system-ui, sans-serif",
                 lineHeight: 1.6,
-                opacity: 0.95,
+                opacity: 0.98,
                 textShadow: "0 3px 12px rgba(0,0,0,0.45)",
               }}
             >
-              No login. No judgement. Share privately or let the world see your heart. Write a prayer, confession, or a short intention — safely and anonymously.
+              Wondering how to feel connected with God and want to talk to Him? Write your personal message to God — share prayers, hopes, and thoughts anonymously and find quiet comfort in our private, judgment-free space.
             </p>
           </div>
 
@@ -117,7 +137,7 @@ export default function Message() {
                 fontWeight: 700,
               }}
             >
-              Community Messages
+              See people messages to god
             </h2>
 
             <p
